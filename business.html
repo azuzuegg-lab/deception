@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BUSINESS | Deception Inc.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; background: #f5f5f5; font-family: 'Noto Sans JP', sans-serif; color: #1a1a1a; }
+        #smoke-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 40px;
+            opacity: 0;
+            filter: blur(8px);
+            transform: scale(0.98);
+            transition: all 2.0s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+        .wrapper.is-visible { opacity: 1; filter: blur(0px); transform: scale(1); }
+
+        .page-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 100px;
+            letter-spacing: 0.15em;
+        }
+
+        /* --- セクション共通設定 --- */
+        .business-section { margin-bottom: 120px; }
+        
+        .sub-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            letter-spacing: 0.1em;
+            color: #111;
+        }
+
+        /* --- グリッドレイアウト --- */
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 60px;
+        }
+
+        .item-card {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            pointer-events: auto;
+        }
+
+        .item-card:hover {
+            transform: translateX(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.3);
+        }
+
+        .item-name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: block;
+            color: #111;
+        }
+
+        .item-desc {
+            font-size: 0.85rem;
+            color: #888;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* --- BRANDS / PROJECTS 特有のスタイル --- */
+        .brands-section .item-name {
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .back-nav { margin-top: 100px; text-align: center; padding-bottom: 100px; }
+        .back-nav a { text-decoration: none; color: #999; font-family: 'Bodoni Moda', serif; font-style: italic; letter-spacing: 0.2em; transition: 0.4s; }
+        .back-nav a:hover { color: #000; transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+            .item-grid { grid-template-columns: 1fr; gap: 20px; }
+            .wrapper { padding: 80px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="smoke-canvas"></canvas>
+
+    <div class="wrapper" id="main-content">
+        <h1 class="page-title">Business</h1>
+
+        <section class="business-section">
+            <h2 class="sub-title">BUSINESS</h2>
+            <div class="item-grid">
+                <div class="item-card">
+                    <span class="item-name">Apparel Production</span>
+                    <span class="item-desc">企画・製造・クオリティコントロール</span>
+                </div>
+                <div class="item-card">
+                    <span class="item-name">Apparel Sales Agency</span>
+                    <span class="item-desc">国内外ブランドの販売代理・流通支援</span>
+                </div>
+                <div class="item-card">
+                    <span class="item-name">Apparel Consulting</span>
+                    <span class="item-desc">ブランディング・戦略立案・EC最適化</span>
+                </div>
+                <div class="item-card">
+                    <span class="item-name">Food & Beverage</span>
+                    <span class="item-desc">飲食事業のプロデュース・運営</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="brands-section">
+            <h2 class="sub-title">BRANDS / PROJECTS</h2>
+            <div class="item-grid">
+                <div class="item-card">
+                    <span class="item-name">VENDETTA</span>
+                </div>
+                <div class="item-card">
+                    <span class="item-name">Santa Maria Novella</span>
+                </div>
+                <div class="item-card">
+                    <span class="item-name">9.2 GOLF PRO</span>
+                </div>
+                <div class="item-card">
+                    <span class="item-name">ATELIER FUKUとSAKE</span>
+                </div>
+            </div>
+        </section>
+
+        <nav class="back-nav">
+            <a href="/">BACK TO TOP</a>
+        </nav>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform float time;
+        uniform vec2 resolution;
+        uniform vec2 mouse;
+        varying vec2 vUv;
+        float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+        float noise(vec2 p) {
+            vec2 i = floor(p); vec2 f = fract(p);
+            f = f*f*(3.0-2.0*f);
+            return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), f.x),
+                       mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
+        }
+        float fbm(vec2 p) {
+            float v = 0.0; float a = 0.5;
+            for (int i = 0; i < 5; i++) {
+                v += a * noise(p);
+                p *= 2.0; a *= 0.5;
+            }
+            return v;
+        }
+        void main() {
+            vec2 p = (vUv * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
+            vec2 m = (mouse * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
+            float slowTime = time * 0.12; 
+            vec2 drift = vec2(sin(slowTime * 0.5) * 0.2 + fbm(p * 0.5 + slowTime * 0.2), cos(slowTime * 0.6) * 0.2 + fbm(p * 0.6 - slowTime * 0.3));
+            vec2 warpedP = p + drift;
+            float f = fbm(warpedP * 1.5 + drift * 0.2);
+            float mouseDist = length(p - m);
+            float mouseInfluence = exp(-mouseDist * 2.5);
+            float mask = (1.0 - smoothstep(0.1, 1.9, length(p)));
+            float smokeAlpha = smoothstep(0.3, 0.75, f); 
+            smokeAlpha = pow(smokeAlpha, 2.0);
+            float finalAlpha = smokeAlpha * mask * (0.12 + mouseInfluence * 0.3);
+            vec3 bgColor = vec3(0.96, 0.96, 0.96); 
+            vec3 smokeColor = vec3(0.08, 0.08, 0.08);
+            gl_FragColor = vec4(mix(bgColor, smokeColor, finalAlpha), 1.0);
+        }
+    </script>
+    <script>
+        const canvas = document.getElementById('smoke-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const scene = new THREE.Scene();
+        const camera = new THREE.Camera();
+        const uniforms = {
+            time: { value: 0 },
+            resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            mouse: { value: new THREE.Vector2(0.5, 0.5) }
+        };
+        const material = new THREE.ShaderMaterial({
+            uniforms,
+            vertexShader: document.getElementById('vertexShader').textContent,
+            fragmentShader: document.getElementById('fragmentShader').textContent
+        });
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+        window.addEventListener('mousemove', e => {
+            uniforms.mouse.value.x = e.clientX / window.innerWidth;
+            uniforms.mouse.value.y = 1 - e.clientY / window.innerHeight;
+        });
+        function animate(t) {
+            uniforms.time.value = t * 0.001;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        animate(0);
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+        });
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('main-content').classList.add('is-visible');
+            }, 400); 
+        };
+    </script>
+</body>
+</html>

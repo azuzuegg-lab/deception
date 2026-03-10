@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ABOUT | Deception Inc.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; background: #f5f5f5; font-family: 'Noto Sans JP', sans-serif; color: #1a1a1a; }
+        #smoke-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 40px;
+            opacity: 0;
+            filter: blur(8px);
+            transform: scale(0.98);
+            transition: all 2.0s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        .wrapper.is-visible { opacity: 1; filter: blur(0px); transform: scale(1); }
+
+        .section-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: 0.15em;
+        }
+
+        /* --- 会社情報テーブル --- */
+        .info-container {
+            border-top: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 150px;
+        }
+        .info-row { display: flex; padding: 35px 0; border-bottom: 1px solid rgba(0,0,0,0.1); align-items: baseline; }
+        .info-label { width: 200px; font-family: 'Bodoni Moda', serif; font-style: italic; color: #888; text-transform: uppercase; }
+        .info-value { flex: 1; font-weight: 400; line-height: 2; }
+
+        /* --- 代表挨拶セクション（新設） --- */
+        .message-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-top: 100px;
+        }
+
+        .ceo-photo {
+            flex: 1;
+            max-width: 400px;
+            /* 仮の写真プレースホルダー */
+            aspect-ratio: 3/4;
+            background: #e0e0e0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ceo-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%); /* モノクロにして高級感を出す */
+            transition: filter 0.8s ease;
+        }
+
+        .ceo-photo:hover img { filter: grayscale(0%); }
+
+        .message-content {
+            flex: 1.2;
+        }
+
+        .message-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            color: #111;
+        }
+
+        .message-text {
+            font-size: 0.95rem;
+            line-height: 2.2;
+            color: #333;
+            font-weight: 300;
+        }
+
+        .ceo-signature {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .ceo-signature .title {
+            font-size: 0.8rem;
+            color: #888;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .ceo-signature .name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .back-nav { margin-top: 150px; text-align: center; padding-bottom: 100px; }
+        .back-nav a { text-decoration: none; color: #999; font-family: 'Bodoni Moda', serif; font-style: italic; letter-spacing: 0.2em; transition: 0.4s; }
+        .back-nav a:hover { color: #000; transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+            .message-section { flex-direction: column; gap: 40px; }
+            .ceo-photo { max-width: 100%; width: 100%; }
+            .info-row { flex-direction: column; padding: 20px 0; }
+            .info-label { margin-bottom: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="smoke-canvas"></canvas>
+
+    <div class="wrapper" id="main-content">
+        <h1 class="section-title">About Us</h1>
+
+        <div class="info-container">
+            <div class="info-row">
+                <div class="info-label">Company Name</div>
+                <div class="info-value">Deception株式会社 (DECEPTION, INC.)</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Established</div>
+                <div class="info-value">2023年12月4日</div>
+            </div>
+            <div class="info-row">
+        <div class="info-label">Capital</div>
+        <div class="info-value">2,000,000円</div>
+    </div>
+            <div class="info-row">
+                <div class="info-label">Location</div>
+                <div class="info-value">〒212-0023 神奈川県川崎市幸区戸手本町1-53-16</div>
+            </div>
+        </div>
+
+        <section class="message-section">
+            <div class="ceo-photo">
+                <img src="images/taka-1.jpg" alt="CEO Portrait">
+            </div>
+            
+            <div class="message-content">
+                <h2 class="message-title">Vision & Message</h2>
+                <div class="message-text">
+                    <p>「本質は、目に見えない細部に宿る」</p>
+                    <p>
+                        私たちは、移り変わりの激しい現代において、
+                        単なる流行を追うのではなく、時代を超えて愛される
+                        「本物の価値」とは何かを問い続けてきました。
+                    </p>
+                    <p>
+                        Deception（ディセプション）という名は、
+                        固定観念を覆し、新たな驚きを創造するという決意から生まれました。
+                        私たちが提供するのは、製品やサービスそのものではなく、
+                        それらを手にした瞬間の「高揚感」と「静かなる自信」です。
+                    </p>
+                    <p>
+                        誠実さと遊び心を忘れず、関わるすべての人々と共に
+                        まだ見ぬ未来をデザインしていく。
+                        その挑戦を、私たちは止めることはありません。
+                    </p>
+                </div>
+                
+                <div class="ceo-signature">
+                    <span class="title">Representative Director & CEO</span>
+                    <span class="name">Takahiro Nagai</span>
+                </div>
+            </div>
+        </section>
+
+        <nav class="back-nav">
+            <a href="/">BACK TO TOP</a>
+        </nav>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+        void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform float time;
+        uniform vec2 resolution;
+        uniform vec2 mouse;
+        varying vec2 vUv;
+        float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+        float noise(vec2 p) {
+            vec2 i = floor(p); vec2 f = fract(p);
+            f = f*f*(3.0-2.0*f);
+            return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), f.x),
+                       mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
+        }
+        float fbm(vec2 p) {
+            float v = 0.0; float a = 0.5;
+            for (int i = 0; i < 5; i++) {
+                v += a * noise(p);
+                p *= 2.0; a *= 0.5;
+            }
+            return v;
+        }
+        void main() {
+            vec2 p = (vUv * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
+            vec2 m = (mouse * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
+            float slowTime = time * 0.12; 
+            vec2 drift = vec2(sin(slowTime * 0.5) * 0.2 + fbm(p * 0.5 + slowTime * 0.2), cos(slowTime * 0.6) * 0.2 + fbm(p * 0.6 - slowTime * 0.3));
+            vec2 warpedP = p + drift;
+            float f = fbm(warpedP * 1.5 + drift * 0.2);
+            float mouseDist = length(p - m);
+            float mouseInfluence = exp(-mouseDist * 2.5);
+            float mask = (1.0 - smoothstep(0.1, 1.9, length(p)));
+            float smokeAlpha = smoothstep(0.3, 0.75, f); 
+            smokeAlpha = pow(smokeAlpha, 2.0);
+            float finalAlpha = smokeAlpha * mask * (0.12 + mouseInfluence * 0.3);
+            vec3 bgColor = vec3(0.96, 0.96, 0.96); 
+            vec3 smokeColor = vec3(0.08, 0.08, 0.08);
+            gl_FragColor = vec4(mix(bgColor, smokeColor, finalAlpha), 1.0);
+        }
+    </script>
+    <script>
+        // 背景アニメーションのJS（前回と同じロジック）
+        const canvas = document.getElementById('smoke-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const scene = new THREE.Scene();
+        const camera = new THREE.Camera();
+        const uniforms = {
+            time: { value: 0 },
+            resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            mouse: { value: new THREE.Vector2(0.5, 0.5) }
+        };
+        const material = new THREE.ShaderMaterial({
+            uniforms,
+            vertexShader: document.getElementById('vertexShader').textContent,
+            fragmentShader: document.getElementById('fragmentShader').textContent
+        });
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+        window.addEventListener('mousemove', e => {
+            uniforms.mouse.value.x = e.clientX / window.innerWidth;
+            uniforms.mouse.value.y = 1 - e.clientY / window.innerHeight;
+        });
+        function animate(t) {
+            uniforms.time.value = t * 0.001;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        animate(0);
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+        });
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('main-content').classList.add('is-visible');
+            }, 400); 
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* --- ヘッダー全幅保証版 --- */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  padding: 0 3vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+header .logo {
+  font-size: 16px;
+  letter-spacing: 2px;
+  white-space: nowrap;   /* ← ロゴが改行しない */
+}
+
+header nav {
+  display: flex;
+  gap: 20px;             /* ← marginではなく gap に統一 */
+  white-space: nowrap;   /* ← メニューが改行しない */
+}
+
+header nav a {
+  font-size: 13px;       /* ← MacBookでも切れない大きさ */
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: 0.3s;
+}
+
+header nav a:hover {
+  opacity: 1;
+}
+
+
+.main {
+  padding-top: 120px; /* 固定ヘッダー分の余白 */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+p {
+  line-height: 1.8;
+  font-size: 16px;
+}
+
