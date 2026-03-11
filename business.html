@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BUSINESS | Deception Inc.</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
     <style>
         body, html { margin: 0; padding: 0; background: #f5f5f5; font-family: 'Noto Sans JP', sans-serif; color: #1a1a1a; }
         #smoke-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
@@ -22,26 +22,29 @@
         }
         .wrapper.is-visible { opacity: 1; filter: blur(0px); transform: scale(1); }
 
+        /* ページタイトルを Anton に */
         .page-title {
-            font-family: 'Bodoni Moda', serif;
-            font-size: clamp(2.5rem, 8vw, 3.5rem);
-            font-style: italic;
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            text-transform: uppercase;
             text-align: center;
             margin-bottom: 100px;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.05em;
+            line-height: 1;
         }
 
         .business-section { margin-bottom: 120px; }
         
+        /* セクション見出しを Anton に */
         .sub-title {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 1.8rem;
-            font-style: italic;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding-bottom: 15px;
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
             margin-bottom: 40px;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             color: #111;
+            text-transform: uppercase;
         }
 
         .item-grid {
@@ -55,6 +58,8 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: all 0.4s ease;
             pointer-events: auto;
+            text-decoration: none; /* Aタグとして使う場合のため */
+            display: block;
         }
 
         .item-card:hover {
@@ -62,33 +67,41 @@
             border-bottom: 1px solid rgba(0,0,0,0.3);
         }
 
+        /* 項目名を Anton に調整（写真のような詰まった感じに） */
         .item-name {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
             display: block;
             color: #111;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.1;
         }
 
         .item-desc {
             font-size: 0.85rem;
             color: #888;
             letter-spacing: 0.05em;
-            text-transform: uppercase;
+            font-weight: 400;
         }
 
-        .brands-section .item-name {
-            font-weight: 700;
-            letter-spacing: 0.05em;
-        }
-
+        /* 戻るナビゲーションも統一 */
         .back-nav { margin-top: 100px; text-align: center; padding-bottom: 100px; }
-        .back-nav a { text-decoration: none; color: #999; font-family: 'Bodoni Moda', serif; font-style: italic; letter-spacing: 0.2em; transition: 0.4s; }
+        .back-nav a { 
+            text-decoration: none; 
+            color: #999; 
+            font-family: 'Anton', sans-serif; 
+            text-transform: uppercase;
+            letter-spacing: 0.15em; 
+            transition: 0.4s; 
+        }
         .back-nav a:hover { color: #000; transform: translateY(-3px); }
 
         @media (max-width: 768px) {
             .item-grid { grid-template-columns: 1fr; gap: 20px; }
             .wrapper { padding: 80px 25px; }
+            .item-name { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -99,18 +112,18 @@
         <h1 class="page-title">Business</h1>
 
         <section class="business-section">
-            <h2 class="sub-title">BUSINESS</h2>
+            <h2 class="sub-title">CORE BUSINESS</h2>
             <div class="item-grid">
                 <div class="item-card">
                     <span class="item-name">Apparel Production</span>
                     <span class="item-desc">企画・製造・クオリティコントロール</span>
                 </div>
                 <div class="item-card">
-                    <span class="item-name">Apparel Sales Agency</span>
+                    <span class="item-name">Sales Agency</span>
                     <span class="item-desc">国内外ブランドの販売代理・流通支援</span>
                 </div>
                 <div class="item-card">
-                    <span class="item-name">Apparel Consulting</span>
+                    <span class="item-name">Consulting</span>
                     <span class="item-desc">ブランディング・戦略立案・EC最適化</span>
                 </div>
                 <div class="item-card">
@@ -125,15 +138,19 @@
             <div class="item-grid">
                 <div class="item-card">
                     <span class="item-name">VENDETTA</span>
+                    <span class="item-desc">Private Label</span>
                 </div>
                 <div class="item-card">
                     <span class="item-name">Santa Maria Novella</span>
+                    <span class="item-desc">Store Management Support</span>
                 </div>
                 <div class="item-card">
                     <span class="item-name">9.2 GOLF PRO</span>
+                    <span class="item-desc">Japan Distribution</span>
                 </div>
                 <div class="item-card">
-                    <span class="item-name">ATELIER FUKUとSAKE</span>
+                    <span class="item-name">FUKU to SAKE</span>
+                    <span class="item-desc">Atelier Project</span>
                 </div>
             </div>
         </section>
@@ -153,7 +170,6 @@
         uniform vec2 resolution;
         uniform vec2 mouse;
         varying vec2 vUv;
-
         float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
         float noise(vec2 p) {
             vec2 i = floor(p); vec2 f = fract(p);
@@ -161,7 +177,6 @@
             return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), f.x),
                        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
         }
-
         float fbm(vec2 p) {
             float v = 0.0; float a = 0.5;
             for (int i = 0; i < 4; i++) {
@@ -170,39 +185,22 @@
             }
             return v;
         }
-
         void main() {
             vec2 p = (vUv * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
             vec2 m = (mouse * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
-
             float slowTime = time * 0.12; 
-
-            vec2 drift = vec2(
-                sin(slowTime * 0.7) * 0.3 + fbm(p + slowTime * 0.3),
-                cos(slowTime * 0.5) * 0.3 + fbm(p - slowTime * 0.2)
-            );
-
-            vec2 q = vec2( fbm( p + drift + vec2(0.0,0.0) ),
-                           fbm( p + drift + vec2(5.2,1.3) ) );
-            
-            vec2 r = vec2( fbm( p + 4.0*q + vec2(1.7,9.2) + slowTime * 0.15 ),
-                           fbm( p + 4.0*q + vec2(8.3,2.8) + slowTime * 0.126 ) );
-
+            vec2 drift = vec2(sin(slowTime * 0.7) * 0.3 + fbm(p + slowTime * 0.3), cos(slowTime * 0.5) * 0.3 + fbm(p - slowTime * 0.2));
+            vec2 q = vec2( fbm( p + drift ), fbm( p + drift + vec2(5.2,1.3) ) );
+            vec2 r = vec2( fbm( p + 4.0*q + vec2(1.7,9.2) + slowTime * 0.15 ), fbm( p + 4.0*q + vec2(8.3,2.8) + slowTime * 0.126 ) );
             float f = fbm( p + 4.0*r );
-
             float mouseDist = length(p - m);
             float mouseInfluence = exp(-mouseDist * 2.2);
-
             float mask = (1.0 - smoothstep(0.1, 1.9, length(p)));
-            
             float blushAlpha = smoothstep(0.3, 0.75, f);
             blushAlpha = pow(blushAlpha, 1.8);
-
             float finalAlpha = blushAlpha * mask * (0.12 + mouseInfluence * 0.32);
-
             vec3 bgColor = vec3(0.96, 0.96, 0.96); 
             vec3 smokeColor = vec3(0.08, 0.08, 0.08);
-
             gl_FragColor = vec4(mix(bgColor, smokeColor, finalAlpha), 1.0);
         }
     </script>

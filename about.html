@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ABOUT | Deception Inc.</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
     <style>
         body, html { margin: 0; padding: 0; background: #f5f5f5; font-family: 'Noto Sans JP', sans-serif; color: #1a1a1a; }
         #smoke-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
@@ -23,13 +23,15 @@
 
         .wrapper.is-visible { opacity: 1; filter: blur(0px); transform: scale(1); }
 
+        /* ページタイトルを Anton に */
         .section-title {
-            font-family: 'Bodoni Moda', serif;
-            font-size: clamp(2.5rem, 8vw, 3.5rem);
-            font-style: italic;
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            text-transform: uppercase;
             text-align: center;
             margin-bottom: 80px;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.05em;
+            line-height: 1;
         }
 
         /* --- 会社情報テーブル --- */
@@ -38,7 +40,16 @@
             margin-bottom: 150px;
         }
         .info-row { display: flex; padding: 35px 0; border-bottom: 1px solid rgba(0,0,0,0.1); align-items: baseline; }
-        .info-label { width: 200px; font-family: 'Bodoni Moda', serif; font-style: italic; color: #888; text-transform: uppercase; }
+        
+        /* ラベル部分を Anton に */
+        .info-label { 
+            width: 220px; 
+            font-family: 'Anton', sans-serif; 
+            color: #888; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em;
+            font-size: 1.1rem;
+        }
         .info-value { flex: 1; font-weight: 400; line-height: 2; }
 
         /* --- 代表挨拶セクション --- */
@@ -73,11 +84,12 @@
         }
 
         .message-title {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 2rem;
-            font-style: italic;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 30px;
             color: #111;
+            letter-spacing: 0.1em;
         }
 
         .message-text {
@@ -100,14 +112,22 @@
         }
 
         .ceo-signature .name {
-            font-family: 'Bodoni Moda', serif;
+            font-family: 'Noto Sans JP', sans-serif;
             font-size: 1.4rem;
             font-weight: 700;
             letter-spacing: 0.1em;
         }
 
+        /* 戻るナビゲーションを Anton に */
         .back-nav { margin-top: 150px; text-align: center; padding-bottom: 100px; }
-        .back-nav a { text-decoration: none; color: #999; font-family: 'Bodoni Moda', serif; font-style: italic; letter-spacing: 0.2em; transition: 0.4s; }
+        .back-nav a { 
+            text-decoration: none; 
+            color: #999; 
+            font-family: 'Anton', sans-serif; 
+            text-transform: uppercase;
+            letter-spacing: 0.1em; 
+            transition: 0.4s; 
+        }
         .back-nav a:hover { color: #000; transform: translateY(-3px); }
 
         @media (max-width: 768px) {
@@ -145,34 +165,24 @@
 
         <section class="message-section">
             <div class="ceo-photo">
-                <img src="images/taka-1.jpg" alt="Takahiro Nagai">
+                <img src="images/taka-1.jpg" alt="Nagai Takahiro">
             </div>
             
             <div class="message-content">
-                <h2 class="message-title">Vision & Message</h2>
+                <h2 class="message-title">代表挨拶</h2>
                 <div class="message-text">
-                    <p>「本質は、目に見えない細部に宿る」</p>
-                    <p>
-                        私たちは、移り変わりの激しい現代において、
-                        単なる流行を追うのではなく、時代を超えて愛される
-                        「本物の価値」とは何かを問い続けてきました。
-                    </p>
-                    <p>
-                        Deception（ディセプション）という名は、
-                        固定観念を覆し、新たな驚きを創造するという決意から生まれました。
-                        私たちが提供するのは、製品やサービスそのものではなく、
-                        それらを手にした瞬間の「高揚感」と「静かなる自信」です。
-                    </p>
-                    <p>
-                        誠実さと遊び心を忘れず、関わるすべての人々と共に
-                        まだ見ぬ未来をデザインしていく。
-                        その挑戦を、私たちは止めることはありません。
-                    </p>
+                    <p>ファッションは、単なる衣服ではなく、その人の価値観や生き方を映し出す「表現」だと考えています。</p>
+                    <p>私はこれまで約15年以上にわたりアパレル業界に携わり、国内外のブランドで販売・マネジメント・ブランド運営に深く関わってきました。</p>
+                    <p>ラグジュアリーブランドでの経験を通じて、「良い商品」をつくることだけではなく、人・環境・仕組みが揃って初めてブランドは成長するということを学びました。</p>
+                    <p>その経験をもとに、Deception株式会社ではアパレル事業を中心に、ブランド企画・制作、販売代行・人材支援、アパレルコンサルティングなど、多角的な事業を展開しています。</p>
+                    <p>また、自社ブランド VENDETTA をはじめ、ATELIER FUKUとSAKE などの事業を通じて、新しいブランドやクリエイションが生まれる環境づくりにも力を入れています。</p>
+                    <p>アパレル業界は華やかな一方で、働き方や環境に多くの課題がある業界でもあります。特に、ライフステージの変化によって現場を離れざるを得ない方々が、培ったスキルを活かして安心して働き続けられる環境をつくることも、私たちの重要な役割です。</p>
+                    <p>クリエイションとビジネスが両立し、関わるすべての人が成長できる環境を目指し、これからも新しい価値を創造し続けてまいります。</p>
                 </div>
                 
                 <div class="ceo-signature">
-                    <span class="title">Representative Director & CEO</span>
-                    <span class="name">Takahiro Nagai</span>
+                    <span class="title">Deception株式会社 代表取締役CEO</span>
+                    <span class="name">永井 貴啓</span>
                 </div>
             </div>
         </section>
@@ -192,7 +202,6 @@
         uniform vec2 resolution;
         uniform vec2 mouse;
         varying vec2 vUv;
-
         float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
         float noise(vec2 p) {
             vec2 i = floor(p); vec2 f = fract(p);
@@ -200,7 +209,6 @@
             return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), f.x),
                        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
         }
-
         float fbm(vec2 p) {
             float v = 0.0; float a = 0.5;
             for (int i = 0; i < 4; i++) {
@@ -209,39 +217,22 @@
             }
             return v;
         }
-
         void main() {
             vec2 p = (vUv * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
             vec2 m = (mouse * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
-
             float slowTime = time * 0.12; 
-
-            vec2 drift = vec2(
-                sin(slowTime * 0.7) * 0.3 + fbm(p + slowTime * 0.3),
-                cos(slowTime * 0.5) * 0.3 + fbm(p - slowTime * 0.2)
-            );
-
-            vec2 q = vec2( fbm( p + drift + vec2(0.0,0.0) ),
-                           fbm( p + drift + vec2(5.2,1.3) ) );
-            
-            vec2 r = vec2( fbm( p + 4.0*q + vec2(1.7,9.2) + slowTime * 0.15 ),
-                           fbm( p + 4.0*q + vec2(8.3,2.8) + slowTime * 0.126 ) );
-
+            vec2 drift = vec2(sin(slowTime * 0.7) * 0.3 + fbm(p + slowTime * 0.3), cos(slowTime * 0.5) * 0.3 + fbm(p - slowTime * 0.2));
+            vec2 q = vec2( fbm( p + drift ), fbm( p + drift + vec2(5.2,1.3) ) );
+            vec2 r = vec2( fbm( p + 4.0*q + vec2(1.7,9.2) + slowTime * 0.15 ), fbm( p + 4.0*q + vec2(8.3,2.8) + slowTime * 0.126 ) );
             float f = fbm( p + 4.0*r );
-
             float mouseDist = length(p - m);
             float mouseInfluence = exp(-mouseDist * 2.2);
-
             float mask = (1.0 - smoothstep(0.1, 1.9, length(p)));
-            
             float blushAlpha = smoothstep(0.3, 0.75, f);
             blushAlpha = pow(blushAlpha, 1.8);
-
             float finalAlpha = blushAlpha * mask * (0.12 + mouseInfluence * 0.32);
-
             vec3 bgColor = vec3(0.96, 0.96, 0.96); 
             vec3 smokeColor = vec3(0.08, 0.08, 0.08);
-
             gl_FragColor = vec4(mix(bgColor, smokeColor, finalAlpha), 1.0);
         }
     </script>
