@@ -41,7 +41,7 @@
         .info-label { width: 200px; font-family: 'Bodoni Moda', serif; font-style: italic; color: #888; text-transform: uppercase; }
         .info-value { flex: 1; font-weight: 400; line-height: 2; }
 
-        /* --- 代表挨拶セクション（新設） --- */
+        /* --- 代表挨拶セクション --- */
         .message-section {
             display: flex;
             align-items: center;
@@ -52,7 +52,6 @@
         .ceo-photo {
             flex: 1;
             max-width: 400px;
-            /* 仮の写真プレースホルダー */
             aspect-ratio: 3/4;
             background: #e0e0e0;
             overflow: hidden;
@@ -63,7 +62,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%); /* モノクロにして高級感を出す */
+            filter: grayscale(100%);
             transition: filter 0.8s ease;
         }
 
@@ -135,9 +134,9 @@
                 <div class="info-value">2023年12月4日</div>
             </div>
             <div class="info-row">
-        <div class="info-label">Capital</div>
-        <div class="info-value">2,000,000円</div>
-    </div>
+                <div class="info-label">Capital</div>
+                <div class="info-value">5,000,000円</div>
+            </div>
             <div class="info-row">
                 <div class="info-label">Location</div>
                 <div class="info-value">〒212-0023 神奈川県川崎市幸区戸手本町1-53-16</div>
@@ -146,7 +145,7 @@
 
         <section class="message-section">
             <div class="ceo-photo">
-                <img src="images/taka-1.jpg" alt="images/taka-1.jpg">
+                <img src="images/taka-1.jpg" alt="Takahiro Nagai">
             </div>
             
             <div class="message-content">
@@ -193,6 +192,7 @@
         uniform vec2 resolution;
         uniform vec2 mouse;
         varying vec2 vUv;
+
         float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
         float noise(vec2 p) {
             vec2 i = floor(p); vec2 f = fract(p);
@@ -200,34 +200,52 @@
             return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), f.x),
                        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
         }
+
         float fbm(vec2 p) {
             float v = 0.0; float a = 0.5;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 v += a * noise(p);
-                p *= 2.0; a *= 0.5;
+                p *= 2.2; a *= 0.5;
             }
             return v;
         }
+
         void main() {
             vec2 p = (vUv * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
             vec2 m = (mouse * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
+
             float slowTime = time * 0.12; 
-            vec2 drift = vec2(sin(slowTime * 0.5) * 0.2 + fbm(p * 0.5 + slowTime * 0.2), cos(slowTime * 0.6) * 0.2 + fbm(p * 0.6 - slowTime * 0.3));
-            vec2 warpedP = p + drift;
-            float f = fbm(warpedP * 1.5 + drift * 0.2);
+
+            vec2 drift = vec2(
+                sin(slowTime * 0.7) * 0.3 + fbm(p + slowTime * 0.3),
+                cos(slowTime * 0.5) * 0.3 + fbm(p - slowTime * 0.2)
+            );
+
+            vec2 q = vec2( fbm( p + drift + vec2(0.0,0.0) ),
+                           fbm( p + drift + vec2(5.2,1.3) ) );
+            
+            vec2 r = vec2( fbm( p + 4.0*q + vec2(1.7,9.2) + slowTime * 0.15 ),
+                           fbm( p + 4.0*q + vec2(8.3,2.8) + slowTime * 0.126 ) );
+
+            float f = fbm( p + 4.0*r );
+
             float mouseDist = length(p - m);
-            float mouseInfluence = exp(-mouseDist * 2.5);
+            float mouseInfluence = exp(-mouseDist * 2.2);
+
             float mask = (1.0 - smoothstep(0.1, 1.9, length(p)));
-            float smokeAlpha = smoothstep(0.3, 0.75, f); 
-            smokeAlpha = pow(smokeAlpha, 2.0);
-            float finalAlpha = smokeAlpha * mask * (0.12 + mouseInfluence * 0.3);
+            
+            float blushAlpha = smoothstep(0.3, 0.75, f);
+            blushAlpha = pow(blushAlpha, 1.8);
+
+            float finalAlpha = blushAlpha * mask * (0.12 + mouseInfluence * 0.32);
+
             vec3 bgColor = vec3(0.96, 0.96, 0.96); 
             vec3 smokeColor = vec3(0.08, 0.08, 0.08);
+
             gl_FragColor = vec4(mix(bgColor, smokeColor, finalAlpha), 1.0);
         }
     </script>
     <script>
-        // 背景アニメーションのJS（前回と同じロジック）
         const canvas = document.getElementById('smoke-canvas');
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);

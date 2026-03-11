@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mode & Luxury | IHNN</title>
+    <title>Mode & Luxury | DECEPTION</title>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #f5f5f5; font-family: 'Playfair Display', serif; overflow: hidden; }
         #smoke-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         
+        /* ①のレイアウトとアニメーションを維持 */
         .container { 
             position: relative; 
             z-index: 2; 
@@ -17,11 +18,10 @@
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
-            width: 100%; /* 横幅を明示的に指定 */
+            width: 100%; 
             text-align: center; 
             pointer-events: none; 
             
-            /* 初期状態：計算が確定するまで隠し、正面から浮かび上がる */
             opacity: 0;
             filter: blur(12px);
             transform: scale(0.9);
@@ -37,7 +37,6 @@
             transform: scale(1);
         }
         
-        /* 【重要】clampを使い、PCでもスマホでも適切なサイズを維持 */
         .logo-mark { 
             font-family: 'Bodoni Moda', serif; 
             font-size: clamp(3.5rem, 15vw, 6.5rem); 
@@ -92,6 +91,7 @@
 </head>
 <body>
     <canvas id="smoke-canvas"></canvas>
+    
     <div class="container" id="main-content">
         <div class="logo-mark">CO.</div>
         <div class="brand-name">Deception</div>
@@ -104,15 +104,18 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <script id="vertexShader" type="x-shader/x-vertex">
         varying vec2 vUv;
         void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
     </script>
+
     <script id="fragmentShader" type="x-shader/x-fragment">
         uniform float time;
         uniform vec2 resolution;
         uniform vec2 mouse;
         varying vec2 vUv;
+
         float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
         float noise(vec2 p) {
             vec2 i = floor(p); vec2 f = fract(p);
@@ -120,29 +123,50 @@
             return mix(mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), f.x),
                        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);
         }
+
         float fbm(vec2 p) {
             float v = 0.0; float a = 0.5;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 v += a * noise(p);
-                p *= 2.0; a *= 0.5;
+                p *= 2.2; a *= 0.5;
             }
             return v;
         }
+
         void main() {
             vec2 p = (vUv * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
             vec2 m = (mouse * 2.0 - 1.0) * vec2(resolution.x / resolution.y, 1.0);
+
             float slowTime = time * 0.12; 
-            vec2 drift = vec2(sin(slowTime * 0.5) * 0.2 + fbm(p * 0.5 + slowTime * 0.2), cos(slowTime * 0.6) * 0.2 + fbm(p * 0.6 - slowTime * 0.3));
-            vec2 warpedP = p + drift;
-            float f = fbm(warpedP * 1.5 + drift * 0.2);
+
+            // 多方面への動きのコア
+            vec2 drift = vec2(
+                sin(slowTime * 0.7) * 0.3 + fbm(p + slowTime * 0.3),
+                cos(slowTime * 0.5) * 0.3 + fbm(p - slowTime * 0.2)
+            );
+
+            // Domain Warping
+            vec2 q = vec2( fbm( p + drift + vec2(0.0,0.0) ),
+                           fbm( p + drift + vec2(5.2,1.3) ) );
+            
+            vec2 r = vec2( fbm( p + 4.0*q + vec2(1.7,9.2) + slowTime * 0.15 ),
+                           fbm( p + 4.0*q + vec2(8.3,2.8) + slowTime * 0.126 ) );
+
+            float f = fbm( p + 4.0*r );
+
             float mouseDist = length(p - m);
-            float mouseInfluence = exp(-mouseDist * 2.5);
+            float mouseInfluence = exp(-mouseDist * 2.2);
+
             float mask = (1.0 - smoothstep(0.1, 1.9, length(p)));
-            float smokeAlpha = smoothstep(0.3, 0.75, f); 
-            smokeAlpha = pow(smokeAlpha, 2.0);
-            float finalAlpha = smokeAlpha * mask * (0.12 + mouseInfluence * 0.3);
+            
+            float blushAlpha = smoothstep(0.3, 0.75, f);
+            blushAlpha = pow(blushAlpha, 1.8);
+
+            float finalAlpha = blushAlpha * mask * (0.12 + mouseInfluence * 0.32);
+
             vec3 bgColor = vec3(0.96, 0.96, 0.96); 
             vec3 smokeColor = vec3(0.08, 0.08, 0.08);
+
             gl_FragColor = vec4(mix(bgColor, smokeColor, finalAlpha), 1.0);
         }
     </script>
@@ -152,6 +176,7 @@
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
+
         const scene = new THREE.Scene();
         const camera = new THREE.Camera();
         const uniforms = {
@@ -159,12 +184,15 @@
             resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
             mouse: { value: new THREE.Vector2(0.5, 0.5) }
         };
+
         const material = new THREE.ShaderMaterial({
             uniforms,
             vertexShader: document.getElementById('vertexShader').textContent,
             fragmentShader: document.getElementById('fragmentShader').textContent
         });
+
         scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
         window.addEventListener('mousemove', e => {
             uniforms.mouse.value.x = e.clientX / window.innerWidth;
             uniforms.mouse.value.y = 1 - e.clientY / window.innerHeight;
@@ -182,13 +210,11 @@
             uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
         });
 
-        // ページ読み込み時の処理
+        // ①のアニメーション開始タイミング
         window.addEventListener('DOMContentLoaded', () => {
             const content = document.getElementById('main-content');
-            
-            // 強制的に再描画させてからアニメーションを開始
             setTimeout(() => {
-                content.offsetHeight; // ブラウザに計算を強制する
+                content.offsetHeight; 
                 content.classList.add('is-visible');
             }, 500);
         });
