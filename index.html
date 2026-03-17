@@ -94,6 +94,26 @@
         .tagline a {
             font-family: 'Anton', 'Noto Sans JP', sans-serif;
         }
+
+        /* ロゴの重なりを解消するためのレスポンシブ調整 */
+@media (max-width: 768px) {
+    .logo-mark { 
+        font-size: clamp(4rem, 25vw, 6rem); /* スマホで少しだけサイズを抑える */
+        margin-bottom: 0px; /* 重なりを防ぐためにマイナス値を解除 */
+        line-height: 1.1;   /* 文字の上下にわずかな隙間を作る */
+    }
+    
+    .brand-name { 
+        font-size: clamp(1rem, 6vw, 1.4rem); 
+        margin-bottom: 40px; /* 下のメニューとの間隔もスマホ用に調整 */
+        letter-spacing: 0.15em; /* スマホでは少し文字間を狭めて収まりを良くする */
+    }
+
+    .tagline {
+        padding: 30px 0;
+        gap: 15px 20px; /* メニューが2行になっても綺麗に見えるように間隔を調整 */
+    }
+}
     </style>
 </head>
 <body>
